@@ -40,7 +40,7 @@ endif
 
 VX_DEFINE = $(PWD)/VX_define.vh
 SED_STRING = 's|define IDMEMINITFILE.*|define IDMEMINITFILE "$(IDMEMINITFILE)"|g' 
-VL_FLAGS += --exe -cc project2_frame.v --top-module project2_frame --trace --trace-structs -Wno-LATCH
+VL_FLAGS += --exe -cc project2_frame.v --top-module project2_frame --trace --trace-structs
 CXXFLAGS += -DVCD_OUTPUT -DDPRINTF
 LDFLAGS += 
 
@@ -56,7 +56,7 @@ tests:
 	@echo "-- VERILATE ----------------"
 	@echo $(IDMEMINITFILE)
 	@echo $(VX_DEFINE)
-	sed -i ".bak" $(SED_STRING) $(VX_DEFINE)
+	sed -i $(SED_STRING) $(VX_DEFINE)
 	$(VERILATOR) $(VL_FLAGS) sim_main.cpp fe_stage.v de_stage.v mem_stage.v wb_stage.v agex_stage.v -CFLAGS '$(CXXFLAGS)'
 	@echo "-- COMPILE -----------------"
 	$(MAKE) -j 4 -C obj_dir -f Vproject2_frame.mk
